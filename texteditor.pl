@@ -84,19 +84,23 @@ my $fileopenbutton = Gtk2::Button->new_with_label($openfiletitle);
 				$openframe->set_border_width(4);
 		my $openHbox=Gtk2::HBox->new;
 		our $openfilename =Gtk2::FileChooserButton->new('Select a File', 'open');
-			$openfilename->set_filename('test.txt');
-		our $openfilename2=Gtk2::FileChooserButton->new('Select a Folder', 'select-folder');
+			#$openfilename->set_filename('test.txt');
+		#our $openfilename2=Gtk2::FileChooserButton->new('Select a Folder', 'select-folder');
 			my $openfilebutton2=Gtk2::Button->new_with_label($openbutton2title);
 				$openfilebutton2->signal_connect(clicked=>sub {readfilefunction{
-					my $dir1 = dir($openfilename2->get_filename); 
+					#my $dir1 = dir($openfilename2->get_filename); 
 					#our $filename2 = $openfilename->get_filename;
 					$Entry1->set_buffer($Entry1buffer);
 					my $start2=$Entry1buffer->get_start_iter;
-					my $file2 = $dir1->file($openfilename->get_filename);
-					my $content = $file2->slurp();
-					my $file_handle2 = $file2->openr();
+					#my $file2 = $dir1->file($openfilename->get_filename);
+					our $openfile= $openfilename->get_filename;
+					our $filecontent= $openfile->slurp();
+					#our $content = $file2->slurp();
+					#my $file_handle2 = $file2->openr();
 					while( my $line1 = $file_handle2->getline() ) {
-						$Entry1buffer->insert_interactive($start2, $content, 1);
+						$Entry1buffer->insert($start2, $filecontent, 1)
+							* $start2 (Gtk2::TextIter)
+							* $filecontent (string)
 					}	
 				}});
 			$VBox2->add($openframe);
